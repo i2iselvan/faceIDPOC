@@ -1,0 +1,20 @@
+PODS:
+  - PBJVision (0.6.0)
+  - PMAlertController (3.5.0)
+
+DEPENDENCIES:
+  - PBJVision
+  - PMAlertController
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - PBJVision
+    - PMAlertController
+
+SPEC CHECKSUMS:
+  PBJVision: dd8050b8eb621426beae220d76f0f8bf21612e04
+  PMAlertController: 06dab8160066fc4ce991c880e3722cd403e2926a
+
+PODFILE CHECKSUM: 2b310790027fc520fcee99da41ed4eebc4d91df5
+
+COCOAPODS: 1.5.3

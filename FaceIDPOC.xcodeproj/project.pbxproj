@@ -7,21 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		046B810E21E60DA400819A83 /* FaceCropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B810D21E60DA400819A83 /* FaceCropper.swift */; };
+		4EAD4CC058BDDB7A43840F40 /* Pods_FaceIDPOC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59871FFA11992197CC38862B /* Pods_FaceIDPOC.framework */; };
+		58067EC221E5B2250059E863 /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58067EC121E5B2250059E863 /* ScanViewController.swift */; };
+		58067EC421E5B2950059E863 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58067EC321E5B2950059E863 /* UIImageExtensions.swift */; };
+		581CF3D521E58AC50068BD76 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF3D421E58AC50068BD76 /* OnboardingViewController.swift */; };
+		581CF3D721E58B1C0068BD76 /* RecordVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF3D621E58B1C0068BD76 /* RecordVideoViewController.swift */; };
 		589BF65B21E514740003C90E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589BF65A21E514740003C90E /* AppDelegate.swift */; };
-		589BF65D21E514740003C90E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589BF65C21E514740003C90E /* ViewController.swift */; };
 		589BF66021E514740003C90E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 589BF65E21E514740003C90E /* Main.storyboard */; };
 		589BF66221E514780003C90E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 589BF66121E514780003C90E /* Assets.xcassets */; };
 		589BF66521E514780003C90E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 589BF66321E514780003C90E /* LaunchScreen.storyboard */; };
+		A37ACB4121E612B6006316D8 /* FaceRecognition.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A37ACB4021E612B6006316D8 /* FaceRecognition.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		046B810D21E60DA400819A83 /* FaceCropper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceCropper.swift; sourceTree = "<group>"; };
+		58067EC121E5B2250059E863 /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
+		58067EC321E5B2950059E863 /* UIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
+		581CF3D421E58AC50068BD76 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		581CF3D621E58B1C0068BD76 /* RecordVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordVideoViewController.swift; sourceTree = "<group>"; };
 		589BF65721E514740003C90E /* FaceIDPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceIDPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		589BF65A21E514740003C90E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		589BF65C21E514740003C90E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		589BF65F21E514740003C90E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		589BF66121E514780003C90E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		589BF66421E514780003C90E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		589BF66621E514780003C90E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59871FFA11992197CC38862B /* Pods_FaceIDPOC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FaceIDPOC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9054E5FDFDFD1322AD100735 /* Pods-FaceIDPOC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceIDPOC.release.xcconfig"; path = "Pods/Target Support Files/Pods-FaceIDPOC/Pods-FaceIDPOC.release.xcconfig"; sourceTree = "<group>"; };
+		A37ACB4021E612B6006316D8 /* FaceRecognition.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = FaceRecognition.mlmodel; sourceTree = "<group>"; };
+		DD6F09E2E8E92C24326B45BC /* Pods-FaceIDPOC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceIDPOC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FaceIDPOC/Pods-FaceIDPOC.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +43,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EAD4CC058BDDB7A43840F40 /* Pods_FaceIDPOC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3070F21FE13538C1D4471B7F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DD6F09E2E8E92C24326B45BC /* Pods-FaceIDPOC.debug.xcconfig */,
+				9054E5FDFDFD1322AD100735 /* Pods-FaceIDPOC.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		589BF64E21E514740003C90E = {
 			isa = PBXGroup;
 			children = (
 				589BF65921E514740003C90E /* FaceIDPOC */,
 				589BF65821E514740003C90E /* Products */,
+				3070F21FE13538C1D4471B7F /* Pods */,
+				A309B2FBC257630A6361D59C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,13 +81,26 @@
 			isa = PBXGroup;
 			children = (
 				589BF65A21E514740003C90E /* AppDelegate.swift */,
-				589BF65C21E514740003C90E /* ViewController.swift */,
 				589BF65E21E514740003C90E /* Main.storyboard */,
 				589BF66121E514780003C90E /* Assets.xcassets */,
 				589BF66321E514780003C90E /* LaunchScreen.storyboard */,
+				A37ACB4021E612B6006316D8 /* FaceRecognition.mlmodel */,
 				589BF66621E514780003C90E /* Info.plist */,
+				581CF3D421E58AC50068BD76 /* OnboardingViewController.swift */,
+				581CF3D621E58B1C0068BD76 /* RecordVideoViewController.swift */,
+				58067EC121E5B2250059E863 /* ScanViewController.swift */,
+				58067EC321E5B2950059E863 /* UIImageExtensions.swift */,
+				046B810D21E60DA400819A83 /* FaceCropper.swift */,
 			);
 			path = FaceIDPOC;
+			sourceTree = "<group>";
+		};
+		A309B2FBC257630A6361D59C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				59871FFA11992197CC38862B /* Pods_FaceIDPOC.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +110,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 589BF66921E514780003C90E /* Build configuration list for PBXNativeTarget "FaceIDPOC" */;
 			buildPhases = (
+				E3113CD7E795A8D40A5A4AA5 /* [CP] Check Pods Manifest.lock */,
 				589BF65321E514740003C90E /* Sources */,
 				589BF65421E514740003C90E /* Frameworks */,
 				589BF65521E514740003C90E /* Resources */,
+				13965767B53FE975516B980B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -130,13 +171,67 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		13965767B53FE975516B980B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-FaceIDPOC/Pods-FaceIDPOC-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/PBJVision/PBJVision.framework",
+				"${BUILT_PRODUCTS_DIR}/PMAlertController/PMAlertController.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PBJVision.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMAlertController.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FaceIDPOC/Pods-FaceIDPOC-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E3113CD7E795A8D40A5A4AA5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FaceIDPOC-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		589BF65321E514740003C90E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				589BF65D21E514740003C90E /* ViewController.swift in Sources */,
+				581CF3D521E58AC50068BD76 /* OnboardingViewController.swift in Sources */,
+				58067EC221E5B2250059E863 /* ScanViewController.swift in Sources */,
+				A37ACB4121E612B6006316D8 /* FaceRecognition.mlmodel in Sources */,
+				58067EC421E5B2950059E863 /* UIImageExtensions.swift in Sources */,
 				589BF65B21E514740003C90E /* AppDelegate.swift in Sources */,
+				046B810E21E60DA400819A83 /* FaceCropper.swift in Sources */,
+				581CF3D721E58B1C0068BD76 /* RecordVideoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,11 +375,13 @@
 		};
 		589BF66A21E514780003C90E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DD6F09E2E8E92C24326B45BC /* Pods-FaceIDPOC.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H5C585HXF6;
+				DEVELOPMENT_TEAM = 9W5W4S5PA3;
 				INFOPLIST_FILE = FaceIDPOC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -298,11 +395,13 @@
 		};
 		589BF66B21E514780003C90E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9054E5FDFDFD1322AD100735 /* Pods-FaceIDPOC.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H5C585HXF6;
+				DEVELOPMENT_TEAM = 9W5W4S5PA3;
 				INFOPLIST_FILE = FaceIDPOC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
