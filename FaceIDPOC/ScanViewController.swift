@@ -500,7 +500,7 @@ class ScanViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                             
                             print(sortedResults)
                             
-                            if sortedResults.first?.identifier == "hari" {
+                            if (sortedResults.first?.identifier)! == "hari" {
                                 if self.successCount >= 7 {
                                     if self.presentedViewController == nil {
                                         let alertVC = PMAlertController(title: "Success", description: "You have successfully logged in!", image: UIImage(named: "uploadSuccess"), style: .alert)
@@ -514,7 +514,9 @@ class ScanViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                                         return
                                     }
                                 }
-                                self.successCount = self.successCount + 1
+                                if (sortedResults.first?.confidence)! * 100 > 80.0 {
+                                    self.successCount = self.successCount + 1
+                                }
                             }
                         }
                         
