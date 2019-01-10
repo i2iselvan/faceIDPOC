@@ -9,9 +9,11 @@
 import UIKit
 import PBJVision
 import PMAlertController
+import Photos
+
 
 class RecordVideoViewController: UIViewController {
-
+    
     @IBOutlet weak var faceDetectorWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var faceDetectorHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var timerLabel: UILabel!
@@ -34,7 +36,18 @@ class RecordVideoViewController: UIViewController {
         vision.cameraDevice = .front
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        if PBJVision.sharedInstance().isPaused {
+            PBJVision.sharedInstance().resumeVideoCapture()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if PBJVision.sharedInstance().isRecording {
+            PBJVision.sharedInstance().pauseVideoCapture()
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         let previewView = UIView()
         previewView.frame = cameraView.bounds
@@ -45,7 +58,7 @@ class RecordVideoViewController: UIViewController {
         previewView.layer.addSublayer(previewLayer)
         cameraView.addSubview(previewView)
     }
-
+    
     @IBAction func recordButtonAction(_ sender: Any) {
         self.recordButton.isHidden = true
         self.cameraView.isHidden = false
@@ -53,6 +66,8 @@ class RecordVideoViewController: UIViewController {
         PBJVision.sharedInstance().startVideoCapture()
         PBJVision.sharedInstance().startPreview()
     }
+    
+    
     
     
     @objc func update() {
@@ -66,21 +81,46 @@ class RecordVideoViewController: UIViewController {
             PBJVision.sharedInstance().endVideoCapture()
             PBJVision.sharedInstance().stopPreview()
             self.cameraView.isHidden = true
-            let alertVC = PMAlertController(title: "Success", description: "Your video has been uploaded. You can login using Face ID next time.", image: UIImage(named: "uploadSuccess"), style: .alert)
-            
-        
-            alertVC.addAction(PMAlertAction(title: "OK", style: .default, action: { () in
-                self.timerLabel.isHidden = true
-            }))
-            
-            self.present(alertVC, animated: true, completion: nil)
-        }}
+            DispatchQueue.main.async {
+                let alertVC = PMAlertController(title: "Success", description: "Your video has been uploaded. You can login using Face ID next time.", image: UIImage(named: "uploadSuccess"), style: .alert)
+                
+                
+                alertVC.addAction(PMAlertAction(title: "OK", style: .default, action: { () in
+                    self.timerLabel.isHidden = true
+                }))
+                
+                self.present(alertVC, animated: true, completion: nil)
+            }
+        }
+    }
     
 }
 
 
 extension RecordVideoViewController: PBJVisionDelegate {
-    func visionDidEndVideoCapture(_ vision: PBJVision) {
-        
+    
+    func vision(_ vision: PBJVision, capturedVideo videoDict: [AnyHashable : Any]?, error: Error?) {
+        if let currentVideo = videoDict as NSDictionary? {
+            let filePathString = currentVideo.value(forKey: PBJVisionVideoPathKey) as? String ?? ""
+            if filePathString.count > 0 {
+                if let filePathURL = URL(string: filePathString) {
+                    PHPhotoLibrary.shared().performChanges({
+                        PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: filePathURL)
+                    }) { saved, error in
+                        if saved {
+                            DispatchQueue.main.async {
+                                if self.presentedViewController == nil {
+                                    let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .alert)
+                                    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                    alertController.addAction(defaultAction)
+                                    self.present(alertController, animated: true, completion: nil)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
+    
 }

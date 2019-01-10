@@ -33,6 +33,9 @@ class ScanViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     var detectedFaceRectangleShapeLayer: CAShapeLayer?
     var detectedFaceLandmarksShapeLayer: CAShapeLayer?
     
+    var checkCount = 0
+    var successCount = 0
+    
     // Vision requests
     private var detectionRequests: [VNDetectFaceRectanglesRequest]?
     private var trackingRequests: [VNTrackObjectRequest]?
@@ -465,108 +468,11 @@ class ScanViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
     // Handle delegate method callback on receiving a sample buffer.
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
-        var requestHandlerOptions: [VNImageOption: AnyObject] = [:]
-        
-        let cameraIntrinsicData = CMGetAttachment(sampleBuffer, key: kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix, attachmentModeOut: nil)
-        if cameraIntrinsicData != nil {
-            requestHandlerOptions[VNImageOption.cameraIntrinsics] = cameraIntrinsicData
-        }
-        
-        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-            print("Failed to obtain a CVPixelBuffer for the current output frame.")
-            return
-        }
-        
-        let exifOrientation = self.exifOrientationForCurrentDeviceOrientation()
-        
-        guard let requests = self.trackingRequests, !requests.isEmpty else {
-            // No tracking object detected, so perform initial detection
-            let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer,
-                                                            orientation: exifOrientation,
-                                                            options: requestHandlerOptions)
-            
-            do {
-                guard let detectRequests = self.detectionRequests else {
-                    return
-                }
-                try imageRequestHandler.perform(detectRequests)
-                
-            } catch let error as NSError {
-                NSLog("Failed to perform FaceRectangleRequest: %@", error)
-            }
-            return
-        }
-        
-        do {
-            try self.sequenceRequestHandler.perform(requests,
-                                                    on: pixelBuffer,
-                                                    orientation: exifOrientation)
-        } catch let error as NSError {
-            NSLog("Failed to perform SequenceRequest: %@", error)
-        }
-        
-        // Setup the next round of tracking.
-        var newTrackingRequests = [VNTrackObjectRequest]()
-        for trackingRequest in requests {
-            
-            guard let results = trackingRequest.results else {
+        if checkCount < 10 {
+            guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+                print("Failed to obtain a CVPixelBuffer for the current output frame.")
                 return
             }
-            
-            guard let observation = results[0] as? VNDetectedObjectObservation else {
-                return
-            }
-            
-            if !trackingRequest.isLastFrame {
-                if observation.confidence > 0.3 {
-                    trackingRequest.inputObservation = observation
-                } else {
-                    trackingRequest.isLastFrame = true
-                }
-                newTrackingRequests.append(trackingRequest)
-            }
-        }
-        self.trackingRequests = newTrackingRequests
-        
-        if newTrackingRequests.isEmpty {
-            // Nothing to track, so abort.
-            return
-        }
-        
-        // Perform face landmark tracking on detected faces.
-        var faceLandmarkRequests = [VNDetectFaceLandmarksRequest]()
-        
-        // Perform landmark detection on tracked faces.
-        for trackingRequest in newTrackingRequests {
-            
-            let faceLandmarksRequest = VNDetectFaceLandmarksRequest(completionHandler: { (request, error) in
-                
-                if error != nil {
-                    print("FaceLandmarks error: \(String(describing: error)).")
-                }
-                
-                guard let landmarksRequest = request as? VNDetectFaceLandmarksRequest,
-                    let results = landmarksRequest.results as? [VNFaceObservation] else {
-                        return
-                }
-                
-                // Perform all UI updates (drawing) on the main queue, not the background queue on which this handler is being called.
-                DispatchQueue.main.async {
-                    self.drawFaceObservations(results)
-                }
-            })
-            
-            guard let trackingResults = trackingRequest.results else {
-                return
-            }
-            
-            guard let observation = trackingResults[0] as? VNDetectedObjectObservation else {
-                return
-            }
-            
-            let faceObservation = VNFaceObservation(boundingBox: observation.boundingBox)
-            
-            faceLandmarksRequest.inputFaceObservations = [faceObservation]
             
             let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
             
@@ -584,38 +490,46 @@ class ScanViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                     switch result {
                     case .success(let faces):
                         // When the `Vision` successfully find faces, and `FaceCropper` cropped it.
-                        guard let model = try? VNCoreMLModel(for: FaceRecognition().model) else { return }
+                        guard let model = try? VNCoreMLModel(for: Microsoft().model) else { return }
                         let request = VNCoreMLRequest(model: model) { (finishedRequest, error) in
                             guard let results = finishedRequest.results as? [VNClassificationObservation] else { return }
+                            
                             var observation = ""
                             
                             let sortedResults = results.sorted(by: {$0.confidence > $1.confidence})
                             
-                        
+                            print(sortedResults)
+                            
                             if sortedResults.first?.identifier == "hari" {
-                                if self.presentedViewController == nil {
-                                    let alertVC = PMAlertController(title: "Success", description: "You have successfully logged in!", image: UIImage(named: "uploadSuccess"), style: .alert)
-                                    
-                                    
-                                    alertVC.addAction(PMAlertAction(title: "OK", style: .default, action: { () in
-                                    }))
-                                    
-                                    self.present(alertVC, animated: true, completion: nil)
-                                    self.session?.stopRunning()
-                                    self.previewView?.isHidden = true
-                                    return
+                                if self.successCount >= 7 {
+                                    if self.presentedViewController == nil {
+                                        let alertVC = PMAlertController(title: "Success", description: "You have successfully logged in!", image: UIImage(named: "uploadSuccess"), style: .alert)
+                                        
+                                        alertVC.addAction(PMAlertAction(title: "OK", style: .default, action: { () in
+                                        }))
+                                        
+                                        self.present(alertVC, animated: true, completion: nil)
+                                        self.session?.stopRunning()
+                                        self.previewView?.isHidden = true
+                                        return
+                                    }
                                 }
+                                self.successCount = self.successCount + 1
                             }
                         }
                         
-                        for faceImag  in faces {
+                        if faces.count > 0 {
                             do {
-                                try? VNImageRequestHandler(cgImage: faceImag.cgImage!, options: [:]).perform([request])
+                                let faceImage = faces.first!
+                                try VNImageRequestHandler(cgImage: faceImage.cgImage!, options: [:]).perform([request])
+                                self.checkCount = self.checkCount + 1
+                                UIImageWriteToSavedPhotosAlbum(faceImage, nil, nil, nil)
                             } catch let error as NSError {
-                                NSLog("Failed to perform FaceLandmarkRequest: %@", error)
+                                NSLog("Failed to perform VNImageRequest: %@", error)
                             }
-//                            UIImageWriteToSavedPhotosAlbum(faceImag, nil, nil, nil)
                         }
+                        
+                        
                         break
                     // `faces` argument is a collection of cropped images.
                     case .notFound:
@@ -627,18 +541,24 @@ class ScanViewController: UIViewController, AVCaptureVideoDataOutputSampleBuffer
                     }
                 }
             }
-            
-            // Continue to track detected facial landmarks.
-            faceLandmarkRequests.append(faceLandmarksRequest)
-            
-            let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer,
-                                                            orientation: exifOrientation,
-                                                            options: requestHandlerOptions)
-            
-            do {
-                try imageRequestHandler.perform(faceLandmarkRequests)
-            } catch let error as NSError {
-                NSLog("Failed to perform FaceLandmarkRequest: %@", error)
+        } else {
+            DispatchQueue.main.async {
+                if self.presentedViewController == nil {
+                    let alertVC = PMAlertController(title: "Failure", description: "Face cannot be recognized.Please try again!", image: UIImage(named: "signInFailure"), style: .alert)
+                    
+                    
+                    alertVC.addAction(PMAlertAction(title: "OK", style: .default, action: { () in
+                        self.checkCount = 0
+                        self.successCount = 0
+                        self.session?.startRunning()
+                        self.previewView?.isHidden = false
+                    }))
+                    
+                    self.present(alertVC, animated: true, completion: nil)
+                    self.session?.stopRunning()
+                    self.previewView?.isHidden = true
+                    return
+                }
             }
         }
     }
